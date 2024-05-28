@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <h1>Bem-vindo à página de administração!</h1>
+    <p>Você está logado como administrador.</p>
+
+    <h2>Respostas dos Desafios Iniciais:</h2>
+    <ul id="userChallenges"></ul>
+
+    <h2>Respostas dos Desafios Intermediários:</h2>
+    <ul id="intermediateChallenges"></ul>
+
+    <a href="#" id="logout">Logout</a>
+
+    <script>
+        document.getElementById('logout').addEventListener('click', function () {
+            localStorage.removeItem('authToken');
+            window.location.href = '/';
+        });
+
+        // Verificar se o usuário está autenticado
+        if (!localStorage.getItem('authToken')) {
+            window.location.href = '/';
+        }
+
+        // Carregar mensagens dos usuários e respostas dos desafios
+        $(document).ready(function () {
+            $.ajax({
+                url: '/get-messages',
+                type: 'GET',
+                headers: {
+                    'Authorization': localStorage.getItem('authToken')
+                },
+                success: function (response) {
+                    if (response.success) {
+                        const userMessages = $('#userMessages');
+                        const userChallenges = $('#userChallenges');
+                        const intermediateChallenges = $('#intermediateChallenges');
+
+                        response.users.forEach(function (user) {
+                            if (user.messages.length > 0) {
+                                const userMessageItem = $('<li><strong>' + user.name + ' (' + user.email + '):</strong><ul></ul></li>');
+                                user.messages.forEach(function (message) {
+                                    userMessageItem.find('ul').append('<li>' + message.replace(/\n/g, '<br>') + '</li>');
+                                });
+                                userMessages.append(userMessageItem);
+                            }
+
+                            if (user.challenges.length > 0) {
+                                const userChallengeItem = $('<li><strong>' + user.name + ' (' + user.email + '):</strong><ul></ul></li>');
+                                user.challenges.forEach(function (challenge) {
+                                    userChallengeItem.find('ul').append('<li>Desafio 1: ' + challenge.challenge1.replace(/\n/g, '<br>') + '</li>');
+                                    userChallengeItem.find('ul').append('<li>Desafio 2: ' + challenge.challenge2.replace(/\n/g, '<br>') + '</li>');
+                                });
+                                userChallenges.append(userChallengeItem);
+                            }
+
+                            if (user.intermediateChallenges.length > 0) {
+                                const userIntermediateChallengeItem = $('<li><strong>' + user.name + ' (' + user.email + '):</strong><ul></ul></li>');
+                                user.intermediateChallenges.forEach(function (intermediateChallenge) {
+                                    userIntermediateChallengeItem.find('ul').append('<li>Desafio 1: ' + intermediateChallenge.challenge1.replace(/\n/g, '<br>') + '</li>');
+                                    userIntermediateChallengeItem.find('ul').append('<li>Desafio 2: ' + intermediateChallenge.challenge2.replace(/\n/g, '<br>') + '</li>');
+                                });
+                                intermediateChallenges.append(userIntermediateChallengeItem);
+                            }
+                        });
+                    } else {
+                        console.error('Erro ao carregar mensagens e desafios');
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Erro ao carregar mensagens e desafios: ' + textStatus, errorThrown);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

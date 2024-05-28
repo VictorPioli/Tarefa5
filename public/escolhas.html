@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;900&family=Poppins:wght@400;500;700&family=Roboto&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Escolha um Nível</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333; /* Cor do texto */
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            padding: 20px;
+            background-color: #00bf63;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .cards-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            width: calc(33.33% - 20px);
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .card img {
+            width: 70px;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .card-title {
+            color: #161A49;
+            font-size: 20px;
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #333;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .card:hover {
+            opacity: 0.8;
+            cursor: pointer;
+        }
+
+        #logout {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #333;
+            font-size: 16px;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h1>Escolha um nível</h1>
+    <div class="container">
+        <div class="cards-container">
+            <a href="./opcao/opcao1.html" class="card">
+                <img src="./images/junior.png" alt="Júnior">
+                <div class="card-title">Júnior</div>
+                <p>O nível de um programador júnior é geralmente com menos experiência prática do que os programadores intermediários e avançados</p>
+            </a>
+
+            <a href="./opcao/opcao2.html" class="card">
+                <img src="./images/intermediario.png" alt="Intermediário">
+                <div class="card-title">Intermediário</div>
+                <p>Programadores intermediários compreendem bem os conceitos fundamentais, criam soluções complexas e trabalham de forma autônoma em projetos, dominando uma ou mais linguagens de programação</p>
+            </a>
+
+            <a href="./opcao/opcao3.html" class="card">
+                <img src="./images/avançado.png" alt="Avançado">
+                <div class="card-title">Avançado</div>
+                <p>Programadores avançados dominam linguagens e frameworks, resolvem problemas complexos e otimizam o código. Lideram equipes, contribuem em arquiteturas de software e têm habilidades sofisticadas de resolução de problemas</p>
+            </a>
+        </div>
+    </div>
+    <a href="#" id="logout">Logout</a>
+
+    <script>
+        document.getElementById('logout').addEventListener('click', function () {
+            localStorage.removeItem('authToken');
+            window.location.href = '/';
+        });
+    </script>
+</body>
+
+</html>

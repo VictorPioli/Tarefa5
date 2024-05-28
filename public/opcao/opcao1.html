@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/opcao1.css">
+  <title>Enviar Código</title>
+  <script>
+    function sendCode(event) {
+      event.preventDefault();
+
+      const codigo1 = document.getElementById('codigo-1').value;
+      const codigo2 = document.getElementById('codigo-2').value;
+      const codigo3 = document.getElementById('codigo-3').value;
+
+      const data = {
+        iniciante1: codigo1,
+        iniciante2: codigo2,
+        iniciante3: codigo3
+      };
+
+      fetch('/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        alert('Códigos enviados com sucesso!');
+      })
+      .catch(error => {
+        console.error('Erro:', error);
+        alert('Erro ao enviar códigos');
+      });
+    }
+
+  </script>
+</head>
+<body>
+  <div class="container">
+    <form onsubmit="sendCode(event)">
+      <!-- Desafio 1 -->
+      <div class="challenge">
+        <h2><u>Desafio 1:</u> Ache o número 5 no seguinter array: [2, 3, 10, 35, 10, 5, 8]</h2>
+        <label for="codigo-1">Código:</label>
+        <textarea id="codigo-1" required></textarea>
+      </div>
+
+      <!-- Desafio 2 -->
+      <div class="challenge">
+        <h2><u>Desafio 2:</u> Somar Números em uma Lista</h2>
+        <label for="codigo-2">Código:</label>
+        <textarea id="codigo-2" required></textarea>
+      </div>
+
+      <!-- Desafio 3 -->
+      <div class="challenge">
+        <h2><u>Desafio 3</u>: Verifique no array quantos números são maiores que 10. [2, 19, 30, 17, 18]</h2>
+        <label for="codigo-3">Código:</label>
+        <textarea id="codigo-3" required></textarea>
+      </div>
+
+      <button type="submit">Enviar</button>
+    </form>
+    <a href="#" id="logout">Logout</a>
+  </div>
+</body>
+</html>
